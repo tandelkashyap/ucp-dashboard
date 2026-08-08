@@ -65,6 +65,18 @@ export function ConnectStoreForm({ merchantId, merchantSlug }: { merchantId: num
         />
       ))}
 
+      {platform === "magento" && (
+        <label className="flex items-start gap-2 text-sm text-ink-muted">
+          <input type="checkbox" name="verify_ssl" value="true" defaultChecked className="mt-0.5 accent-accent" />
+          <span>
+            Verify SSL certificate
+            <span className="mt-0.5 block text-xs">
+              Uncheck only for a local install on a self-signed cert (e.g. Laragon) — never for a real deployment.
+            </span>
+          </span>
+        </label>
+      )}
+
       {state?.error && (
         <p role="alert" className="text-sm text-danger">
           {state.error}

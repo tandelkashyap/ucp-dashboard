@@ -30,9 +30,15 @@ export async function connectStoreAction(
     return { error: "Unknown platform." };
   }
 
-  const credentials: Record<string, string> = {};
+  const credentials: Record<string, string | boolean> = {};
   for (const field of fields) {
     credentials[field] = String(formData.get(field) ?? "");
+  }
+
+  // Checkboxes are absent from FormData entirely when unchecked — there's
+  // no unchecked value to read, only presence or absence of the key.
+  if (platform === "magento") {
+    credentials.verify_ssl = formData.get("verify_ssl") !== null;
   }
 
   try {
